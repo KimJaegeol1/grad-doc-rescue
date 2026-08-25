@@ -1,0 +1,159 @@
+﻿# ══════════════════════════════════════════════════════════════
+#  보조도구 (grad-rescue) — .gitignore
+#
+#  ★ 올리면 안 되는 것 둘
+#      ① 열쇠   — .env · Document AI 서비스계정 키 · 열쇠 든 배포 zip
+#      ② 개인정보 — 학교 제출자료.  참여학생명·개인정보동의서
+#
+#  ★ 반드시 올려야 하는 것 하나
+#      docs/보조도구 검수기준.xlsx — build.py 의 필수 입력물.
+#      *.xlsx 전역 차단의 예외로 반드시 뚫어 둔다.
+#
+#  고친 뒤 확인:  git check-ignore -v -- <경로>
+# ══════════════════════════════════════════════════════════════
+
+
+# ── ① 열쇠 · 비밀 ─────────────────────────────────────────────
+# secrets/ 는 어느 깊이에 있든 안을 전부 막는다.
+#   배포본(보조도구/secrets/)을 저장소 안에 풀어도 새지 않도록.
+**/secrets/*
+!secrets/.gitkeep
+!secrets/README.txt
+
+.env
+.env.*
+!.env.example
+
+# Google 서비스계정 키
+#   실제 파일명은 {프로젝트ID}-{16진수 12자리}.json 이라
+#   'service-account' 같은 낱말이 안 들어간다.  모양으로 막는다.
+*-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].json
+grad-doc-verify*.json
+doc-ocr-runner*.json
+*service-account*.json
+*service_account*.json
+*credentials*.json
+*client_secret*.json
+gcloud-key*.json
+token.json
+
+*.pem
+*.key
+*.p12
+*.pfx
+
+
+# ── ② 학교 제출자료 · 개인정보 ────────────────────────────────
+# 증빙에는 사진·동영상·명단이 들어 있다.  확장자를 세지 말고
+# 폴더째 막는다 — 학교가 무슨 형식으로 낼지 미리 알 수 없다.
+증빙/
+**/증빙/
+**/제출자료/
+**/학교자료/
+**/학교별*/
+
+*.xlsx
+*.xlsm
+*.xls
+*.hwp
+*.hwpx
+*.pdf
+*.doc
+*.docx
+*.csv
+
+# 스캔·사진 (개인정보동의서가 png 로 온다)
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tif
+*.tiff
+*.mp4
+*.mov
+*.avi
+
+# ★ 예외 — 검수기준은 이 저장소의 단일 출처다.  없으면 빌드가 안 된다.
+!docs/보조도구 검수기준.xlsx
+!docs/**/*.md
+
+
+# ── ③ 산출물 ──────────────────────────────────────────────────
+# 검사 결과에는 학생 이름이 그대로 들어 있다.
+*_보조_검사결과_*.xlsx
+*_보조_추출내역_*.xlsx
+*_보조_판정보고.json
+*_백업_*.xlsx
+
+# 증빙 원문 텍스트 캐시
+text_cache/
+*.meta.json
+
+# 로그·장부
+*.log
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+
+
+# ── Excel 임시·잠금 파일 ──────────────────────────────────────
+~$*
+*.tmp
+.~lock.*#
+
+
+# ── 파이썬 ────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+venv/
+.venv/
+env/
+ENV/
+.conda/
+
+
+# ── 배포·빌드 (PyInstaller) ───────────────────────────────────
+build/
+dist/
+보조도구/
+**/프로그램파일/
+*.exe
+*.dll
+*.pyd
+*.zip
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+
+# ── 시험·검사 도구 ────────────────────────────────────────────
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+
+
+# ── 편집기 · 운영체제 ─────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+.DS_Store
+.AppleDouble
+._*
